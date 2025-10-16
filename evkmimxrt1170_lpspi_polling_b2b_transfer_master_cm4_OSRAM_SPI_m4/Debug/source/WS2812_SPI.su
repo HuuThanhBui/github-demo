@@ -1,0 +1,4 @@
+../source/WS2812_SPI.c:20:6:SysTick_Handler	4	static
+../source/WS2812_SPI.c:28:6:setLED	24	static
+../source/WS2812_SPI.c:36:6:ws2812_spi	80	static
+../source/WS2812_SPI.c:65:6:WS2812_Send	16	static

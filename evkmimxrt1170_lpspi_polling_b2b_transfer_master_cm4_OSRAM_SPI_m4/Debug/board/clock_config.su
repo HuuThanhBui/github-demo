@@ -1,0 +1,12 @@
+C:\Users\admin\Documents\MCUXpressoIDE_25.6.136\workspace\evkmimxrt1170_lpspi_polling_b2b_transfer_master_cm4_OSRAM_SPI_m4\drivers/fsl_clock.h:1987:24:CLOCK_GetRootClockMux	16	static
+C:\Users\admin\Documents\MCUXpressoIDE_25.6.136\workspace\evkmimxrt1170_lpspi_polling_b2b_transfer_master_cm4_OSRAM_SPI_m4\drivers/fsl_clock.h:2028:24:CLOCK_GetRootClockDiv	16	static
+C:\Users\admin\Documents\MCUXpressoIDE_25.6.136\workspace\evkmimxrt1170_lpspi_polling_b2b_transfer_master_cm4_OSRAM_SPI_m4\drivers/fsl_clock.h:2073:20:CLOCK_SetRootClock	16	static
+C:\Users\admin\Documents\MCUXpressoIDE_25.6.136\workspace\evkmimxrt1170_lpspi_polling_b2b_transfer_master_cm4_OSRAM_SPI_m4\drivers/fsl_clock.h:2156:24:CLOCK_GetRootClockFreq	32	static
+C:\Users\admin\Documents\MCUXpressoIDE_25.6.136\workspace\evkmimxrt1170_lpspi_polling_b2b_transfer_master_cm4_OSRAM_SPI_m4\drivers/fsl_clock.h:2295:20:CLOCK_OSC_EnableOsc48M	16	static
+C:\Users\admin\Documents\MCUXpressoIDE_25.6.136\workspace\evkmimxrt1170_lpspi_polling_b2b_transfer_master_cm4_OSRAM_SPI_m4\drivers/fsl_clock.h:2327:20:CLOCK_OSC_EnableOsc48MDiv2	16	static
+C:\Users\admin\Documents\MCUXpressoIDE_25.6.136\workspace\evkmimxrt1170_lpspi_polling_b2b_transfer_master_cm4_OSRAM_SPI_m4\drivers/fsl_clock.h:2409:20:CLOCK_OSC_GateOscRc400M	16	static
+C:\Users\admin\Documents\MCUXpressoIDE_25.6.136\workspace\evkmimxrt1170_lpspi_polling_b2b_transfer_master_cm4_OSRAM_SPI_m4\drivers/fsl_iomuxc.h:1685:20:IOMUXC_SetSaiMClkClockSource	24	static
+C:\Users\admin\Documents\MCUXpressoIDE_25.6.136\workspace\evkmimxrt1170_lpspi_polling_b2b_transfer_master_cm4_OSRAM_SPI_m4\drivers/fsl_iomuxc.h:1755:20:IOMUXC_MQSConfig	24	static
+../board/clock_config.c:45:6:BOARD_InitBootClocks	8	static
+../board/clock_config.c:280:6:BOARD_BootClockRUN	24	static
+../board/clock_config.c:1095:6:BOARD_BootClockRUN_800M	24	static

@@ -1,0 +1,10 @@
+C:\Users\admin\Documents\MCUXpressoIDE_25.6.136\workspace\evkmimxrt1170_lpspi_polling_b2b_transfer_master_cm4_OSRAM_SPI_m4\CMSIS/mpu_armv7.h:191:22:ARM_MPU_Enable	16	static
+C:\Users\admin\Documents\MCUXpressoIDE_25.6.136\workspace\evkmimxrt1170_lpspi_polling_b2b_transfer_master_cm4_OSRAM_SPI_m4\CMSIS/mpu_armv7.h:204:22:ARM_MPU_Disable	4	static
+C:\Users\admin\Documents\MCUXpressoIDE_25.6.136\workspace\evkmimxrt1170_lpspi_polling_b2b_transfer_master_cm4_OSRAM_SPI_m4\drivers/fsl_clock.h:1987:24:CLOCK_GetRootClockMux	16	static
+C:\Users\admin\Documents\MCUXpressoIDE_25.6.136\workspace\evkmimxrt1170_lpspi_polling_b2b_transfer_master_cm4_OSRAM_SPI_m4\drivers/fsl_clock.h:2028:24:CLOCK_GetRootClockDiv	16	static
+C:\Users\admin\Documents\MCUXpressoIDE_25.6.136\workspace\evkmimxrt1170_lpspi_polling_b2b_transfer_master_cm4_OSRAM_SPI_m4\drivers/fsl_clock.h:2156:24:CLOCK_GetRootClockFreq	32	static
+../board/board.c:24:10:BOARD_DebugConsoleSrcFreq	8	static
+../board/board.c:36:6:BOARD_InitDebugConsole	16	static
+../board/board.c:463:6:BOARD_ConfigMPU	24	static
+../board/board.c:662:6:BOARD_SD_Pin_Config	16	static
+../board/board.c:666:6:BOARD_MMC_Pin_Config	16	static
