@@ -1,0 +1,102 @@
+// aoresult.h - list of all error codes in any of the aolibs.
+/*****************************************************************************
+ * Copyright 2024,2025 by ams OSRAM AG                                       *
+ * All rights are reserved.                                                  *
+ *                                                                           *
+ * IMPORTANT - PLEASE READ CAREFULLY BEFORE COPYING, INSTALLING OR USING     *
+ * THE SOFTWARE.                                                             *
+ *                                                                           *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS       *
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT         *
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS         *
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT  *
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,     *
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT          *
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,     *
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY     *
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT       *
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE     *
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.      *
+ *****************************************************************************/
+#ifndef _AORESULT_H_
+#define _AORESULT_H_
+
+#include "string.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "stdint.h"
+#include "fsl_debug_console.h"
+//#include <Arduino.h>         // Serial in AORESULT_ASSERT()
+#include "fsl_lpuart.h"
+#include "fsl_common.h"
+
+
+// Identifies lib version
+#define AORESULT_VERSION "0.5.0"
+
+
+// For detailed meaning, see aoresult_to_str()
+typedef enum aoresult_e {
+  // General errors
+  aoresult_ok              , //  0
+  aoresult_assert          , //  1
+  aoresult_outargnull      , //  2
+  aoresult_outofmem        , //  3
+  aoresult_comparefail     , //  4
+  aoresult_other           , //  5
+
+  // Errors from aospi
+  aoresult_spi_buf         , //  6
+  aoresult_spi_noclock     , //  7
+  aoresult_spi_length      , //  8
+
+  // Errors for aoosp
+  aoresult_osp_arg         , //  9
+  aoresult_osp_argsize     , // 10
+  aoresult_osp_addr        , // 11
+  aoresult_osp_preamble    , // 12
+  aoresult_osp_tid         , // 13
+  aoresult_osp_size        , // 14
+  aoresult_osp_psi         , // 15
+  aoresult_osp_crc         , // 16
+  aoresult_osp_nosr        , // 17
+
+  // Errors on OSP system
+  aoresult_sys_cabling     , // 18
+  aoresult_sys_id          , // 19
+  aoresult_sys_wrongtopo   , // 20
+  aoresult_sys_nodecfg     , // 21
+
+  // Errors for attached devices
+  aoresult_dev_noi2cbridge , // 22
+  aoresult_dev_noi2cdev    , // 23
+  aoresult_dev_i2ctimeout  , // 24
+  aoresult_dev_i2cnack     , // 25
+  aoresult_dev_i2cmode     , // 26
+  
+  aoresult_numresultcodes    // 27 keep this as last
+} aoresult_t;
+
+
+// Converts an aoresult_t error code to a string.
+const char * aoresult_to_str(aoresult_t result, int verbose);
+
+
+// Converts file path to just the file base name (clips on last directory separator).
+const char * aoresult_shorten( const char * file);
+
+
+/*!
+    @brief  Checks if `cond` holds, if not, prints error to Serial, and stops.
+    @param  cond
+            Condition to be checked for true-ness
+    @note   If `cond` does not hold program stops.
+    @note   If a debugger is connected, un-comment the break instruction.
+*/
+#define AORESULT_ASSERT(cond) \
+  if( !(cond) ) { \
+    PRINTF("ASSERT( %s ) in %s line %d\n", #cond, aoresult_shorten(__FILE__), __LINE__ ); \
+    /* asm("break.n 1"); */ while(1) /*wait*/ ; \
+  }
+
+#endif

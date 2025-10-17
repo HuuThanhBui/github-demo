@@ -1,0 +1,104 @@
+// aospi.h - 2-wire SPI (and 1-wire Manchester) towards and from OSP nodes
+/*****************************************************************************
+ * Copyright 2024,2025 by ams OSRAM AG                                       *
+ * All rights are reserved.                                                  *
+ *                                                                           *
+ * IMPORTANT - PLEASE READ CAREFULLY BEFORE COPYING, INSTALLING OR USING     *
+ * THE SOFTWARE.                                                             *
+ *                                                                           *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS       *
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT         *
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS         *
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT  *
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,     *
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT          *
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,     *
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY     *
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT       *
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE     *
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.      *
+ *****************************************************************************/
+#ifndef _AOSPI_H_
+#define _AOSPI_H_
+
+
+#include "string.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "stdint.h"
+#include "aoresult.h"
+
+
+// Identifies lib version
+#define AOSPI_VERSION "1.0.1"
+
+
+// OSP uses telegrams of max 12 bytes
+#define AOSPI_TELE_MAXSIZE 12
+
+
+// This library supports multiple physical layers
+typedef enum aospi_phy_e {
+  aospi_phy_undef, // None selected yet
+  aospi_phy_mcua,  // MCU mode Type A
+  aospi_phy_mcub,  // MCU mode Type B (for unmodified OSP32 board)
+//aospi_phy_use,   // USE mode
+//aospi_phy_ext,   // External (ie by application)
+} aospi_phy_t;
+
+
+// Converts a `phy` tag to a human readable string
+const char * aospi_phy_str( aospi_phy_t phy );
+
+
+// Initializes the SPI OUT and IN controllers and their support pins for the selected phy.
+void aospi_init( aospi_phy_t phy); // OSP32 board wired for mcub
+
+
+// Sends the `txsize` bytes in buffer `tx` to the first OSP node.
+aoresult_t aospi_tx(const uint8_t * tx, int txsize);
+// Sends the `txsize` bytes in buffer `tx` to the first OSP node. Waits for a response telegram and stores those bytes in buffer `rx` with size `rxsize`.
+aoresult_t aospi_txrx(const uint8_t * tx, int txsize, uint8_t * rx, int rxsize, int *actsize);
+
+
+//Returns the round trip time for the last `aospi_txrx()` call.
+uint32_t aospi_txrx_us();
+//Returns an estimate of the number of hops a command telegram and it response need in a bidirectional round trip.
+uint32_t aospi_txrx_hops(int t_extra);
+
+
+// Sets the direction mux so that the last OSP node is connected to the SPI slave (for an OSP chain using Loop).
+void aospi_dirmux_set_loop();
+// Sets the direction mux so that the first OSP node is connected to the SPI slave (for an OSP chain using BiDir).
+void aospi_dirmux_set_bidir();
+// Inspects the direction mux, returning iff the last node (Loop) is connected to the SPI slave block.
+int aospi_dirmux_is_loop();
+// Inspects the direction mux, returning iff the first node (BiDir) is connected to the SPI slave block.
+int aospi_dirmux_is_bidir();
+
+
+// The library tracks the number of transmitted telegrams via calls to aospi_tx() and aospi_txrx(). This function resets that counter to 0.
+void aospi_txcount_reset();
+// The library tracks the number of received telegrams via calls aospi_txrx(). This function resets that counter to 0.
+void aospi_rxcount_reset();
+// The library tracks the number of transmitted telegrams via calls to aospi_tx() and aospi_txrx(). This function reports that count.
+int  aospi_txcount_get();
+// The library tracks the number of received telegrams via calls to aospi_txrx(). This function reports that count.
+int  aospi_rxcount_get();
+
+
+// For testing! Sets the output-enable of the outgoing level shifter to `val`.
+void aospi_outoena_set( int val );
+// For testing! Returns the state of the output-enable of the outgoing level shifter.
+int aospi_outoena_get();
+// For testing! Sets the output-enable of the incoming level shifter to `val`.
+void aospi_inoena_set( int val );
+// For testing! Returns the state of the output-enable of the incoming level shifter.
+int aospi_inoena_get( );
+
+
+#endif
+
+
+
+
